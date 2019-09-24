@@ -1,0 +1,37 @@
+show Data
+
+take string Data
+
+variable name = Data
+
+add 5 and 2 in add
+
+subtract 2 from 5 in sub
+
+multiply 5 by 10 in mul
+
+divide 10 by 100 in div
+
+write Data to filename
+
+append Data to filename
+
+read filename to name
+
+if 1 == 1 then
+
+show name
+
+end if
+
+define func with args
+
+show args
+
+end
+
+function func args
+
+native cout << my Native Code << endl;
+
+run echo Hello World From Command Line!
