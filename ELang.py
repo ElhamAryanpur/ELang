@@ -1,3 +1,5 @@
+#!/bin/python3
+
 from os.path import isfile, join
 from os import getcwd, system, remove
 from yaml import load
@@ -682,7 +684,8 @@ if __name__ == "__main__":
         try:
             config = load(config)
             E.config = config
-        except Exception:
+        except Exception as e:
+            # print(e)  # ? This is just for debugging. Feel free to remove this.
             print("ERR: CAN NOT READ CONFIG...")
             exit()
     else:
