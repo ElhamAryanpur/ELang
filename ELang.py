@@ -28,8 +28,9 @@ try:
     import sys
     import time
     import importlib
+    import traceback
 
-except ImportError:
+except ImportError as e:
     print("[E] ERROR #0001: Cannot import system modules!")
     sys.exit(1)
 
@@ -39,7 +40,7 @@ else:
     PROGRAM_TAGLINE = "A translator between humans and computers"
     PROGRAM_VERSION = "0.0.0.1"  # TODO: @Elham, please change this :)
     PROGRAM_TITLE = "{0} v{1} -- {2} ".format(PROGRAM_NAME, PROGRAM_VERSION, PROGRAM_TAGLINE)
-    PROGRAM_START = time.strftime()
+    PROGRAM_START = time.asctime()
 
 # Import core modules
 try:
@@ -49,6 +50,7 @@ try:
 
 except ImportError:
     print("[E] ERROR #0002: Cannot import core modules!")
+    traceback.print_exc()
     sys.exit(2)
 
 else:
@@ -71,6 +73,7 @@ try:
 
 except ImportError as e:
     print("[E] ERROR #0003: Cannot import third-party modules!")
+    traceback.print_exc()
     log.error("Cannot import third-party modules")
     log.error(str(e))
     sys.exit(3)
@@ -84,8 +87,13 @@ try:
     compilers = {}
     for compiler in _compilers:
         try:
-            log.info("Trying to import `{0}` compiler...".format(compiler))
-            compiler_obj = importlib.import_module("core.compilers.{0}".format(compiler))
+            if SimpleLib().isfile("core/compilers/{0}".format(compiler)) == True:
+                log.info("Trying to import `{0}` compiler...".format(compiler))
+                compiler_obj = importlib.import_module("core.compilers.{0}".format(compiler.partition(".py")[0]))
+
+            else:
+                log.info("Path is not file, continuing loop... ({0})".format(compiler))
+                continue
 
         except Exception as e:
             log.error("An error occured while importing the compiler")
@@ -117,7 +125,7 @@ class Main():
         bool debug_mode :: This is set to `True` if debug mode is on.
     """
 
-    def __init__(self, logger):
+    def __init__(self, logger, config_file="config.yml", debug_mode=False):
         """
         def __init__():
             The initialization method for Main() class.
@@ -128,7 +136,13 @@ class Main():
         global PROGRAM_TITLE
         global PROGRAM_VERSION
         global compilers
+        self.PROGRAM_NAME = PROGRAM_NAME
+        self.PROGRAM_TITLE = PROGRAM_TITLE
+        self.PROGRAM_VERSION = PROGRAM_VERSION
+        self.compilers = compilers
         self.logger = logger  # Set the logger.
+        self.config_file = config_file
+        self.debug = debug_mode
 
     def generate_config(self, wizard_mode):
         """
@@ -222,6 +236,14 @@ CompileOnly: {2}""".format(program_name, program_filename, compileonly)
                 printer.Printer().print_with_status("ERROR #0007: Forcing program to quit...")
                 self.cleanup()
 
+    def compile(self):
+        """
+        def compile():
+            Compile the ELang file.
+        """
+
+        pass  # TODO
+
 
     def help(self, panel="main"):
         """
@@ -239,12 +261,13 @@ USAGE:
     [3] {1} compile
 
 Commands:
-    help            ::        Show this help menu.
-    generate        ::        Generate config.yml and compile.elpp files. (see `help generate` for more info.)
-    compile         ::        Compile elpp files (see `help compile` for more info.)
+    help                          ::        Show this help menu.
+    generate                      ::        Generate config.yml and compile.elpp files. (see `help generate` for more info.)
+    compile                       ::        Compile elpp files (see `help compile` for more info.)
 
 Switches:
-    --debug        ::        Enable debugging mode.
+    -c --config=[FILEPATH]        ::        Set configuration file path manually.
+    -d --debug                    ::        Enable debugging mode.
 """.format(self.PROGRAM_TITLE, sys.argv[0])
 
         elif panel == "generate":
@@ -280,11 +303,17 @@ Switches:
         """
 
         self.logger.info("main() method called by {0}().".format(sys._getframe().f_back.f_code.co_name))
+
+        jobs = {
+            # If a job will be executed, it will be true.
+            "generate": False
+        }
+
         i = 0
         arg = sys.argv[i]
         while i < len(sys.argv):
             if arg == sys.argv[0].lower():
-                continue
+                pass
 
             elif arg == "help":
                 try:
@@ -308,16 +337,42 @@ Switches:
                 except IndexError:
                     wizard_mode = False
 
-                self.generate_config(wizard_mode)
+                jobs["generate"] = True
 
             elif arg == "compile":
                 try:
-                    self.compile()  # TODO: Continue this.
+                    self.compile()
 
                 except Exception:
                     pass
-                    # TODO: DEV0003: Continue this.
 
+            elif arg in ("--debug", "-d"):
+                self.logger.enable_logging()
+
+            elif arg == "-c":
+                # ? This will not detect filepaths with spaces. Any ideas?
+                try:
+                    self.config_file = sys.argv[arg+1]
+
+                except IndexError:
+                    printer.Printer().print_with_status("You must specify a filepath!", 2)
+                    self.help()
+
+            elif arg.startswith("--config="):
+                # ? This will not detect filepaths with spaces. Any ideas?
+                try:
+                    self.config_file = arg.partition('=')[2]
+
+                except IndexError:
+                    printer.Printer().print_with_status("You must specify a filepath!", 2)
+
+            else:
+                pass
+
+            i += 1
+
+        if jobs["generate"] == True:
+            self.generate_config(wizard_mode)
 
 
 if __name__ == "__main__":

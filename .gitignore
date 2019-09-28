@@ -2,3 +2,5 @@ config.yml
 TODO
 compile.elpp
 .vscode
+__pycache__
+*.pyc

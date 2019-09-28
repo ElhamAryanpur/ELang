@@ -17,9 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
 
-from core import misc
-from core import exceptions
-
+from core import simplelib
 
 class Printer:
     """
@@ -32,7 +30,23 @@ class Printer:
             Initialization method of Printer() class.
         """
 
-        pass
+        self.cinfo = "{2}[{0}+{2}]{1}".format(
+            simplelib.SimpleLib().foreground_colors["green"],
+            simplelib.SimpleLib().foreground_colors["default"],
+            simplelib.SimpleLib().foreground_colors["grey"]
+            )
+
+        self.cwarn = "{2}[{0}!{2}]{1}".format(
+            simplelib.SimpleLib().foreground_colors["yellow"],
+            simplelib.SimpleLib().foreground_colors["default"],
+            simplelib.SimpleLib().foreground_colors["grey"]
+        )
+
+        self.cerr = "{2}[{0}E{2}]{1}".format(
+            simplelib.SimpleLib().foreground_colors["red"],
+            simplelib.SimpleLib().foreground_colors["default"],
+            simplelib.SimpleLib().foreground_colors["grey"]
+        )
 
     def print_with_status(self, obj, status=0):
         """
@@ -50,22 +64,31 @@ class Printer:
         """
 
         if status == 0:
-            print('{2}[{0}+{2}]{1}'.format(misc.CG, misc.END, misc.CGR),
-                    misc.CG, obj, misc.END)
+            print(
+            self.cinfo,
+            simplelib.SimpleLib().foreground_colors["green"],
+            obj,
+            simplelib.SimpleLib().foreground_colors["default"])
             return None
 
         elif status == 1:
-            print('{2}[{0}!{2}]{1}'.format(misc.CY, misc.END, misc.CGR),
-                    misc.CY, obj, misc.END)
+            print(
+            self.cwarn,
+            simplelib.SimpleLib().foreground_colors["yellow"],
+            obj,
+            simplelib.SimpleLib().foreground_colors["default"])
             return None
 
         elif status == 2:
-            print('{2}[{0}E{2}]{1}'.format(misc.CR, misc.END, misc.CGR),
-                    misc.CR, obj, misc.END)
+            print(
+            self.cerr,
+            simplelib.SimpleLib().foreground_colors["red"],
+            obj,
+            simplelib.SimpleLib().foreground_colors["default"])
             return None
 
         else:
-            raise exceptions.InvalidParameterError("Unknown status mode!")
+            raise ValueError("Unknown status mode!")
 
     def print_and_flush(self, obj):
         """
@@ -105,4 +128,4 @@ class Printer:
             return temp_objs
 
         else:
-            raise exceptions.InvalidParameterError("Mode must be between 0 ~ 2!")
+            raise ValueError("Mode must be between 0 ~ 2!")

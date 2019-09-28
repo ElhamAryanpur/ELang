@@ -37,7 +37,7 @@ global COPYRIGHT
 MODULE_NAME = "Simple Library"
 MODULE_VERSION = 1.13
 MODULE_HISTORY = {
-    "1.13": "Added sizeof_fmt() method."
+    "1.13": "Added sizeof_fmt() method.",
     "1.12": "Added palindromic_triangle() method.",
     "1.11": "Added is_leap_year() method.",
     "1.10": "Added list_directory_tree()",
@@ -938,8 +938,8 @@ class SimpleLib:
         return result
 
     def sizeof_fmt(num, suffix='B'):
-    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
-        if abs(num) < 1024.0:
-            return "%3.1f%s%s" % (num, unit, suffix)
-        num /= 1024.0
-    return "%.1f%s%s" % (num, 'Yi', suffix)
+        for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+            if abs(num) < 1024.0:
+                return "%3.1f%s%s" % (num, unit, suffix)
+            num /= 1024.0
+        return "%.1f%s%s" % (num, 'Yi', suffix)
