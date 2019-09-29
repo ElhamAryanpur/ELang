@@ -265,6 +265,14 @@ class LoggingObject:
 
         self.latest_traceback = traceback
 
+    def get_latest_traceback(self):
+        """
+        def get_latest_traceback():
+            Get the latest traceback that is set earlier.
+        """
+
+        return self.latest_traceback
+
     class LevelNotSetError(Exception):
         """
         class LevelNotSetError():
