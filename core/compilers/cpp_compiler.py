@@ -68,7 +68,7 @@ class ELang():
             Reads the file (elpp program) contents to be compiled.
         """
 
-        if file_name == None:
+        if file_name is None:
             # If filename is empty
             try:
                 PATH = str(os.path.join(os.getcwd(), self.filename))

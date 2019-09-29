@@ -4,3 +4,4 @@ compile.elpp
 .vscode
 __pycache__
 *.pyc
+test/

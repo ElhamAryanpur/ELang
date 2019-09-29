@@ -88,6 +88,7 @@ class LoggingObject:
         # Set the current data
         self.log_datas = []  # All logs inf dict form {log_type:  message}
         self.log_data = ""  # Current/Latest log
+        self.latest_traceback = None  # The latest traceback/error
 
     def _write(self, message):
         """
@@ -255,6 +256,14 @@ class LoggingObject:
         self.log_data = (message, 'critical')
         self.logger.info(message)
         self._write(message)
+
+    def set_latest_traceback(self, traceback):
+        """
+        def set_latest_traceback():
+            Set the latest traceback to be used later.
+        """
+
+        self.latest_traceback = traceback
 
     class LevelNotSetError(Exception):
         """
