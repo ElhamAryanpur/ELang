@@ -6,4 +6,9 @@ import os
 if __name__ == "__main__":
 
     checkup = helper.Checkup(logger.Log(), EUtil)
-    checkup.init()
+    details = checkup.init()
+    if details['config']['language'] == "c++": # Here details['config'] might give 
+                                               # error in IDEs, but it works!
+        ELangObject = cpp.ELang(details['config'])
+        compileCode = ELangObject.compile()
+        os.system(compileCode[0])

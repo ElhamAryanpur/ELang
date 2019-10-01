@@ -4,9 +4,77 @@ INFO:root:    config.yml FOUND!
 
 INFO:root:    config.yml LOADED!
 
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
 INFO:root:    Searching for config.yml
 
 INFO:root:    config.yml FOUND!
 
 INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:SEARCHING FOR COMPILE.ELPP
+
+INFO:root:COMPILE.ELPP HAS BEEN FOUND!
 

@@ -2,4 +2,8 @@ config.yml
 TODO
 compile.elpp
 .vscode
-Switches
+tests
+
+core/__pycache__
+core/languages/__pycache__
+core/misc/__pycache__
