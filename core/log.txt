@@ -1,0 +1,12 @@
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
+INFO:root:    Searching for config.yml
+
+INFO:root:    config.yml FOUND!
+
+INFO:root:    config.yml LOADED!
+
