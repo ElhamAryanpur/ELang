@@ -7,5 +7,3 @@ if __name__ == "__main__":
 
     checkup = helper.Checkup(logger.Log(), EUtil)
     checkup.init()
-
-    pass
