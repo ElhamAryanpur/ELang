@@ -1,10 +1,13 @@
-from os.path import isfile, join
 from os import getcwd
+from os.path import isfile, join
+
 
 class ELang():
-    def __init__(self, config):
+    def __init__(self, config, logger, colors):
         self.config = config
-        self.filename = "c.elpp"
+        self.logger = logger()
+        self.colors = colors
+        self.filename = "compile.elpp"
         self.data = []
         self.comp_data = []
         self.commands = []
@@ -36,14 +39,23 @@ class ELang():
         ]
 
     def reader(self, file_name=None):
+        '''
+        This function is for reading file of ELang code...
+        '''
+        self.logger.logNormal("Starting to read the file!\n")
+        print(self.colors.HEADER + "\n    [[ STARTING COMPILATION TO BINARY ]]    ")
+        print(self.colors.OKBLUE + "\nREADING MAIN CODE FILE...")
         if file_name == None:
+            self.logger.logNormal("FileName Not Given By The Compiler!\n")
+            print("\nFILENAME HAS NOT BE GIVEN BY THE COMPILER!")
             # If filename is empty
             try:
+                print("\nTRYING TO READ THE DEFAULT CODE FILE")
                 PATH = str(join(getcwd(), self.filename))
                 if isfile(PATH):
                     # If file_name does exist:
                     with open(str(self.filename), "r") as f:
-                        # Read file line by line and save it to golobal variable data:
+                        # Read file line by line and save it to global variable data:
                         self.data = f.readlines()
                 else:
                     # If file_name does not exist:
@@ -113,69 +125,72 @@ class ELang():
     
     def parse(self):
         data = []
-        for i in self.commands:
-            o = i[1][0].split()
-            if i[0] == self.features[0]:
-                data.append(i)
-            elif i[0] == self.features[1]:
-                var_data = str(i[1][0])
-                data_word = str(o[0])
-                equalt_word = str(o[1])
-                var_data = var_data.replace(str(data_word + " "), "")
-                var_data = var_data.replace(str(equalt_word) + " ", "")
-                this_data = ["var", [o[0], var_data]]
-                data.append(this_data) 
-            elif i[0] == self.features[2]:
-                this_data = ["add", [o[0], o[2], o[4]]]
-                data.append(this_data)
-            elif i[0] == self.features[3]:
-                this_data = ["sub", [o[0], o[2], o[4]]]
-                data.append(this_data)
-            elif i[0] == self.features[4]:
-                this_data = ["mul", [o[0], o[2], o[4]]]
-                data.append(this_data)
-            elif i[0] == self.features[5]:
-                this_data = ["div", [o[0], o[2], o[4]]]
-                data.append(this_data)
-            elif i[0] == self.features[6]:
-                this_data = ["take", [o[0], o[1]]]
-                data.append(this_data) 
-            elif i[0] == self.features[7]:
-                this_data = ["read", [o[0], o[2]]]
-                data.append(this_data)
-            elif i[0] == self.features[8]:
-                this_data = ["write", [o[0], o[2]]]
-                data.append(this_data)
-            elif i[0] == self.features[9]:
-                this_data = ["append", [o[0], o[2]]]
-                data.append(this_data)
-            elif i[0] == self.features[10]:
-                this_data = ["if", [o[0], o[1], o[2]]]
-                data.append(this_data)
-            elif i[0] == self.features[11]:
-                data.append(["end"])
-            elif i[0] == self.features[12]:
-                this_data = ["def", [o[0]], []]
-                del o[0]
-                del o[0]
-                for p in o:
-                    this_data[2].append(p)
-                data.append(this_data)
-            elif i[0] == self.features[13]:
-                this_data = ["func", o[0], []]
-                del o[0]
-                for p in o:
-                    this_data[2].append(p)
-                data.append(this_data)
-            elif i[0] == self.features[14]:
-                this_data = ["change", [o[0], o[2]]]
-                data.append(this_data)
-            elif i[0] == self.features[15]:
-                data.append(i)
-            elif i[0] == self.features[16]:
-                data.append(i)
-                
-        self.data = data
+        try:
+            for i in self.commands:
+                o = i[1][0].split()
+                if i[0] == self.features[0]:
+                    data.append(i)
+                elif i[0] == self.features[1]:
+                    var_data = str(i[1][0])
+                    data_word = str(o[0])
+                    equalt_word = str(o[1])
+                    var_data = var_data.replace(str(data_word + " "), "")
+                    var_data = var_data.replace(str(equalt_word) + " ", "")
+                    this_data = ["var", [o[0], var_data]]
+                    data.append(this_data) 
+                elif i[0] == self.features[2]:
+                    this_data = ["add", [o[0], o[2], o[4]]]
+                    data.append(this_data)
+                elif i[0] == self.features[3]:
+                    this_data = ["sub", [o[0], o[2], o[4]]]
+                    data.append(this_data)
+                elif i[0] == self.features[4]:
+                    this_data = ["mul", [o[0], o[2], o[4]]]
+                    data.append(this_data)
+                elif i[0] == self.features[5]:
+                    this_data = ["div", [o[0], o[2], o[4]]]
+                    data.append(this_data)
+                elif i[0] == self.features[6]:
+                    this_data = ["take", [o[0], o[1]]]
+                    data.append(this_data) 
+                elif i[0] == self.features[7]:
+                    this_data = ["read", [o[0], o[2]]]
+                    data.append(this_data)
+                elif i[0] == self.features[8]:
+                    this_data = ["write", [o[0], o[2]]]
+                    data.append(this_data)
+                elif i[0] == self.features[9]:
+                    this_data = ["append", [o[0], o[2]]]
+                    data.append(this_data)
+                elif i[0] == self.features[10]:
+                    this_data = ["if", [o[0], o[1], o[2]]]
+                    data.append(this_data)
+                elif i[0] == self.features[11]:
+                    data.append(["end"])
+                elif i[0] == self.features[12]:
+                    this_data = ["def", [o[0]], []]
+                    del o[0]
+                    del o[0]
+                    for p in o:
+                        this_data[2].append(p)
+                    data.append(this_data)
+                elif i[0] == self.features[13]:
+                    this_data = ["func", o[0], []]
+                    del o[0]
+                    for p in o:
+                        this_data[2].append(p)
+                    data.append(this_data)
+                elif i[0] == self.features[14]:
+                    this_data = ["change", [o[0], o[2]]]
+                    data.append(this_data)
+                elif i[0] == self.features[15]:
+                    data.append(i)
+                elif i[0] == self.features[16]:
+                    data.append(i)
+                    
+            self.data = data
+        except Exception as e:
+            print(e)
 
     def compile(self):
         name = self.config["FileName"]

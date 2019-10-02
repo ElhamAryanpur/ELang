@@ -9,6 +9,6 @@ if __name__ == "__main__":
     details = checkup.init()
     if details['config']['language'] == "c++": # Here details['config'] might give 
                                                # error in IDEs, but it works!
-        ELangObject = cpp.ELang(details['config'])
+        ELangObject = cpp.ELang(details['config'], logger.Log, helper.bcolors())
         compileCode = ELangObject.compile()
-        os.system(compileCode[0])
+        checkup.command(compileCode[0])

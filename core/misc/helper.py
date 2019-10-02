@@ -157,5 +157,13 @@ class Checkup():
         
         return details
     
-    def compile(self, command):
-        pass
+    def command(self, command):
+        '''
+        Run console commands and check the results if successful or failed!
+        '''
+        if os.system(command) == 0:
+            print(bcolors.OKBLUE + "\nSUCCESSFUL!")
+            self.logger.logNormal("COMMAND '{}' HAS BEEN RUN SUCCESSFULLY!\n".format(command))
+        else:
+            print(bcolors.FAIL + "\nFAILED!")
+            self.logger.logError("COMMAND '{}' HAS BEEN RUN UNSUCCESSFULLY!\n".format(command), "COULD NOT COMPILE!")
