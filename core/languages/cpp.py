@@ -259,6 +259,8 @@ class ELang():
         code = self.finalize()
         comp = self.config["CompileOnly"]
 
+        print(code)
+
         comp_name = str(name).replace(".elpp", "") + ".cpp"
         with open(comp_name, "w") as f:
             f.write(code)
@@ -358,28 +360,20 @@ class ELang():
         else:
             comp_data0 = self.comp_data[0]
         
-        try:
-            data0 = int(comp_data0)
-            data1 = int(comp_data1)
-            type_of_data = "int"
-        except ValueError:
-            data0 = comp_data0
-            data1 = comp_data1
-            type_of_data = "string"
-        
-        if type_of_data == "string":
-            print("ERR: YOU CAN NOT SUBTRACT STRINGS!\n ERR ON {} AND {}".format(comp_data0, comp_data1))
-            exit()
+        data0 = comp_data0
+        data1 = comp_data1
 
         if data_on_var:
             to_show = '    ' + self.comp_data[2] + ' = ' + str(data0) + ' - ' + str(data1) + ';\n'
         else:
             to_show = '    auto ' + self.comp_data[2] + ' = ' + str(data0) + ' - ' + str(data1) + ';\n'
+            
             try:
                 self.vars[self.comp_data[2]] = data0 - data1
             except ValueError:
                 self.vars[self.comp_data[2]] = str(data0) + str(data1)
 
+        print(to_show)
         self.commands.append(to_show)
 
     def mul(self):
@@ -413,9 +407,6 @@ class ELang():
             data1 = int(data1)
         except ValueError:
             type_int = False
-
-        if type_int == False:
-            print("ERR: YOU CAN NOT MULTIPLY STRINGS WITH STRING OR MULTIPLY!\n ERR ON {} AND {}".format(comp_data0, comp_data1))
 
         else:
             if type_of_data == "string":
@@ -465,10 +456,6 @@ class ELang():
             data0 = comp_data0
             data1 = comp_data1
             type_of_data = "string"
-
-        if type_of_data == "string":
-            print("ERR: YOU CAN NOT DIVIDE STRINGS!\n ERR ON {} AND {}".format(comp_data0, comp_data1))
-            exit()
 
         if data_on_var:
             to_show = '    ' + self.comp_data[2] + ' = ' + str(data1) + ' / ' + str(data0) + ';\n'

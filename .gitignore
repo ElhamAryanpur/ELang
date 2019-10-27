@@ -4,6 +4,10 @@ compile.elpp
 .vscode
 tests
 
+compile
+compile.cpp
+
 core/__pycache__
 core/languages/__pycache__
 core/misc/__pycache__
+core/log.txt
